@@ -147,71 +147,75 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
+      {/* Header - Improved for mobile */}
       <header className="bg-white/90 backdrop-blur-md border-b border-gray-300/50 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg flex items-center justify-center shadow-sm">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg flex items-center justify-center shadow-sm">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div>
-                <h1 className="text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Attendance Portal</h1>
+                <h1 className="text-sm sm:text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Portal</h1>
+                <p className="text-xs text-gray-600 hidden sm:block">Attendance Management</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            {/* Logout Button - Icon only on mobile */}
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 bg-white border border-gray-400/50 hover:border-red-400 hover:bg-red-50 text-gray-700 hover:text-red-700 px-4 py-2.5 rounded-lg shadow-sm transition-all duration-200 font-medium"
+                className="flex items-center justify-center space-x-2 bg-white border border-gray-400/50 hover:border-red-400 hover:bg-red-50 text-gray-700 hover:text-red-700 p-2 sm:px-4 sm:py-2.5 rounded-lg shadow-sm transition-all duration-200 font-medium"
+                title="Sign Out"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
-                <span className="inline">Sign Out</span>
+                <span className="hidden sm:inline">Sign Out</span>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-gradient-to-br from-gray-900 to-blue-900 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        {/* Welcome Section - Adjusted for mobile */}
+        <div className="bg-gradient-to-br from-gray-900 to-blue-900 rounded-xl sm:rounded-2xl shadow-xl p-6 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full -mr-20 -mt-20"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full -ml-16 -mb-16"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-2 border-white rounded-full"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 sm:w-40 sm:h-40 bg-white rounded-full -mr-10 sm:-mr-20 -mt-10 sm:-mt-20"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-32 sm:h-32 bg-white rounded-full -ml-8 sm:-ml-16 -mb-8 sm:-mb-16"></div>
           </div>
           
           <div className="relative z-10">
             <div className="flex flex-col lg:flex-row items-start justify-between">
-              <div className="text-center lg:text-left mb-8 lg:mb-0 lg:mr-8 flex-1">
-                <div className="inline-flex items-center px-4 py-2 bg-white/10 rounded-full mb-6 border border-white/20">
-                  <svg className="w-4 h-4 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="text-center lg:text-left mb-6 lg:mb-0 lg:mr-8 flex-1">
+                <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 bg-white/10 rounded-full mb-4 sm:mb-6 border border-white/20">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <span className="text-blue-100 text-sm font-medium">Welcome</span>
+                  <span className="text-blue-100 text-xs sm:text-sm font-medium">Welcome</span>
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl font-light mb-4 tracking-tight">
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-light mb-3 sm:mb-4 tracking-tight">
                   Hello , <span className="font-semibold text-white">{username}</span>
                 </h1>
                 
                 <div className="relative inline-block" ref={dropdownRef}>
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="bg-white/10 rounded-lg px-4 py-2 border border-white/20">
-                      <span className="text-blue-200 text-sm">Group: </span>
-                      <span className="font-semibold text-white">{userGroup}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-4 sm:mb-6">
+                    <div className="bg-white/10 rounded-lg px-3 py-2 border border-white/20 text-center sm:text-left">
+                      <span className="text-blue-200 text-xs sm:text-sm">Group: </span>
+                      <span className="font-semibold text-white text-sm sm:text-base">{userGroup}</span>
                     </div>
                     <button
                       onClick={() => setShowGroupDropdown(!showGroupDropdown)}
                       disabled={profileLoading}
-                      className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-white/30 hover:border-white/50 flex items-center space-x-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 border border-white/30 hover:border-white/50 flex items-center justify-center space-x-1 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                     >
-                      <span>{profileLoading ? "Updating..." : "Change"}</span>
+                      <span>{profileLoading ? "Updating..." : "Change Group"}</span>
                       <svg 
-                        className={`w-4 h-4 transition-transform ${showGroupDropdown ? 'rotate-180' : ''}`} 
+                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform ${showGroupDropdown ? 'rotate-180' : ''}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -222,27 +226,27 @@ const Home = () => {
                   </div>
 
                   {showGroupDropdown && (
-                    <div className="relative mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                      <div className="p-4">
-                        <div className="text-xs font-semibold text-gray-500 px-3 py-2 uppercase tracking-wide mb-3">
+                    <div className="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-50 min-w-[200px]">
+                      <div className="p-3 sm:p-4">
+                        <div className="text-xs font-semibold text-gray-500 px-2 sm:px-3 py-1 sm:py-2 uppercase tracking-wide mb-2 sm:mb-3">
                           Select Group
                         </div>
-                        <div className="flex flex-row space-x-3 justify-center">
+                        <div className="flex flex-row space-x-2 sm:space-x-3 justify-center">
                           {['A', 'B', 'C'].map((group) => (
                             <button
                               key={group}
                               onClick={() => handleUpdateGroup(group)}
                               disabled={profileLoading}
-                              className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 border-2 min-w-[80px] text-center ${
+                              className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-sm font-medium transition-all duration-200 border-2 min-w-[60px] sm:min-w-[80px] text-center ${
                                 userGroup === group
                                   ? 'bg-blue-100 text-blue-700 border-blue-300 shadow-sm'
                                   : 'text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-gray-300'
                               } ${profileLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
-                              <div className="flex items-center justify-center space-x-2">
-                                <span className="font-semibold">{group}</span>
+                              <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                                <span className="font-semibold text-sm sm:text-base">{group}</span>
                                 {userGroup === group && (
-                                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                   </svg>
                                 )}
@@ -255,14 +259,14 @@ const Home = () => {
                   )}
                 </div>
                 
-                <p className="text-xl text-blue-100 mb-8 max-w-2xl leading-relaxed">
+                <p className="text-base sm:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
                   Track your attendance, analyze patterns, and maintain your academic standing.
                 </p>
               </div>
               
-              <div className="flex-shrink-0 flex items-center justify-center">
-                <div className="w-28 h-28 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center shadow-lg border border-blue-500/30">
-                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex-shrink-0 flex items-center justify-center mt-4 sm:mt-0">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-28 lg:h-28 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg border border-blue-500/30">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
@@ -271,23 +275,24 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Action Buttons - Adjusted for mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <button
             onClick={() => navigateTo("/classes")}
-            className="group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-300/50 hover:border-blue-500/30 p-6 text-left transition-all duration-300 hover:translate-y-[-4px]"
+            className="group bg-white rounded-lg sm:rounded-xl shadow-sm hover:shadow-lg border border-gray-300/50 hover:border-blue-500/30 p-4 sm:p-6 text-left transition-all duration-300 hover:translate-y-[-2px] sm:hover:translate-y-[-4px]"
           >
-            <div className="flex items-start space-x-4">
-              <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 border border-blue-200/50">
-                <svg className="w-7 h-7 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 border border-blue-200/50">
+                <svg className="w-5 h-5 sm:w-7 sm:h-7 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 text-xl mb-2">Academic Schedule</h3>
-                <p className="text-gray-600 leading-relaxed">Review your class timetable, upcoming sessions, and academic calendar</p>
-                <div className="mt-3 text-sm text-blue-600 font-medium flex items-center">
+                <h3 className="font-semibold text-gray-900 text-lg sm:text-xl mb-1 sm:mb-2">Academic Schedule</h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Review your class timetable and academic calendar</p>
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-blue-600 font-medium flex items-center">
                   View schedule
-                  <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -297,20 +302,20 @@ const Home = () => {
 
           <button
             onClick={() => navigateTo("/attendance")}
-            className="group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-300/50 hover:border-green-500/30 p-6 text-left transition-all duration-300 hover:translate-y-[-4px]"
+            className="group bg-white rounded-lg sm:rounded-xl shadow-sm hover:shadow-lg border border-gray-300/50 hover:border-green-500/30 p-4 sm:p-6 text-left transition-all duration-300 hover:translate-y-[-2px] sm:hover:translate-y-[-4px]"
           >
-            <div className="flex items-start space-x-4">
-              <div className="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors duration-300 border border-green-200/50">
-                <svg className="w-7 h-7 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-green-50 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors duration-300 border border-green-200/50">
+                <svg className="w-5 h-5 sm:w-7 sm:h-7 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 text-xl mb-2">Record Attendance</h3>
-                <p className="text-gray-600 leading-relaxed">Mark your presence for ongoing classes and track your attendance</p>
-                <div className="mt-3 text-sm text-green-600 font-medium flex items-center">
+                <h3 className="font-semibold text-gray-900 text-lg sm:text-xl mb-1 sm:mb-2">Record Attendance</h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Mark your presence for ongoing classes</p>
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-green-600 font-medium flex items-center">
                   Mark attendance
-                  <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -321,8 +326,6 @@ const Home = () => {
 
         <SubjectAttendanceSummary />
       </div>
-
-    
     </div>
   );
 };
