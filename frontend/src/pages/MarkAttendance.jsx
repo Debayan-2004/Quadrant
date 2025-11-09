@@ -722,7 +722,7 @@ const MarkAttendancePage = () => {
                   </svg></span>
               </div>
               <div>
-                <h1 className="text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Attendance Portal</h1>
+                <h1 className="text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Portal</h1>
                 <p className="text-sm text-gray-600">Mark your class attendance (Group {userGroup})</p>
               </div>
             </div>
