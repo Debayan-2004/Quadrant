@@ -6,7 +6,6 @@ import { AttendanceContext } from '../context/AttendanceContext';
 import timetableData from '../assets/academicTimetable.json';
 const academicTimetable = timetableData.timetable;
 
-
 // =========================================================================
 // 🌟 INTEGRATED SCHEDULES AND ASSESSMENT DATES (Required for Group Logic)
 // =========================================================================
@@ -14,10 +13,7 @@ const academicTimetable = timetableData.timetable;
 const clinicalPostingSchedule = {
   "01/11/2025 TO 20/11/2025": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
   "21/11/2025 TO 10/12/2025": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
-  "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
-  "01/05/2025 TO 21/05/2025": { "Orthopedics": "A", "Dermatology": "B", "Dentistry": "C" },
-  "16/06/2025 TO 10/07/2025": { "Orthopedics": "B", "Dermatology": "A", "Dentistry": "A" },
-  "11/07/2025 TO 04/08/2025": { "Orthopedics": "C", "Dermatology": "A", "Dentistry": "B" }
+  "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" }
 };
 
 const sglSchedules = {
@@ -28,26 +24,10 @@ const sglSchedules = {
     "THURSDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
     "FRIDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
     "SATURDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" }
-  },
-  "first_to_second_assessment": {
-    "MONDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
-    "TUESDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
-    "WEDNESDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
-    "THURSDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
-    "FRIDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
-    "SATURDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" }
-  },
-  "second_to_third_assessment": {
-    "MONDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
-    "TUESDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
-    "WEDNESDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
-    "THURSDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
-    "FRIDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
-    "SATURDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" }
   }
 };
 
-// **ACTION REQUIRED:** Update these with your assessment dates (DD-MM-YYYY)
+// Assessment dates
 const FIRST_ASSESSMENT_DATE_STRING = null; 
 const SECOND_ASSESSMENT_DATE_STRING = null; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
@@ -128,7 +108,6 @@ const getSGLPeriod = (dateString) => {
   return "before_first_assessment";
 };
 
-
 // Core function to map timetable activity to a user-specific subject name.
 const getSubjectName = (topicString, dateString, dayName, userGroup) => {
   if (!topicString || topicString.includes("HOLIDAY")) return topicString || "N/A";
@@ -169,20 +148,20 @@ const getSubjectName = (topicString, dateString, dayName, userGroup) => {
   if (topicString.includes("FAMILY ADOPTION PROGRAMME")) return "FAMILY ADOPTION PROGRAMME";
   if (topicString.includes("SDL")) return "Self-Directed Learning (SDL)";
   
-  // 4. Check for full subject names (THE FIX FOR FORENSIC MEDICINE)
+  // 4. Check for full subject names
   if (topicString.includes("Pathology")) return "Pathology";
   if (topicString.includes("Pharmacology")) return "Pharmacology";
   if (topicString.includes("Microbiology")) return "Microbiology";
   if (topicString.includes("Internal Medicine")) return "Internal Medicine";
   if (topicString.includes("Surgery")) return "Surgery";
-  if (topicString.includes("Forensic Medicine")) return "Forensic Medicine"; // ✅ FIX APPLIED HERE
+  if (topicString.includes("Forensic Medicine")) return "Forensic Medicine";
   if (topicString.includes("Obstetrics") || topicString.includes("Gynaecology")) return "Obstetrics & Gynecology";
   if (topicString.includes("Community Medicine")) return "Community Medicine";
 
-  // 5. Check for abbreviations (only if full names weren't found)
+  // 5. Check for abbreviations
   const subjectMap = {
     IM: "Internal Medicine", MI: "Microbiology", PH: "Pharmacology",
-    PA: "Pathology", SU: "Surgery", FM: "Forensic Medicine", // FM will be caught here if it's the prefix
+    PA: "Pathology", SU: "Surgery", FM: "Forensic Medicine",
     OG: "Obstetrics & Gynecology", CM: "Community Medicine",
   };
 
@@ -201,11 +180,10 @@ const getSubjectName = (topicString, dateString, dayName, userGroup) => {
   return "Class/Activity";
 };
 
-
 // Enhanced submission status with time-based availability
 const getSubmissionStatus = (classDate, existingAttendance) => {
   const today = new Date();
-  const currentTime = today.getHours() * 60 + today.getMinutes(); // Current time in minutes
+  const currentTime = today.getHours() * 60 + today.getMinutes();
   
   const [day, month, year] = classDate.split('-');
   const classDay = new Date(`${year}-${month}-${day}`);
@@ -225,7 +203,7 @@ const getSubmissionStatus = (classDate, existingAttendance) => {
   }
 
   const classDayEnd = new Date(classDay);
-  classDayEnd.setHours(16, 0, 0, 0); // 4:00 PM (16:00)
+  classDayEnd.setHours(16, 0, 0, 0);
   
   const isToday = classDay.getTime() === todayStart.getTime();
 
@@ -266,7 +244,6 @@ const getFlatTimetable = (timetable, userGroup) => {
       const subject = getSubjectName(topic, dayRecord.date, dayRecord.day, userGroup);
       
       if (subject !== "N/A" && subject !== "HOLIDAY" && subject !== "CLINICS" && subject !== "SMALL GROUP LEARNING") {
-
         const timeSlot = key
           .replace('time_', '')
           .replace(/_/g, '-')
@@ -293,27 +270,20 @@ const getFlatTimetable = (timetable, userGroup) => {
 // Color mapping for subjects
 const getSubjectColor = (subject) => {
   const colorMap = {
-    // Regular Subjects
     'Internal Medicine': 'bg-blue-100 text-blue-800 border-blue-200',
     'Microbiology': 'bg-purple-100 text-purple-800 border-purple-200',
     'Pharmacology': 'bg-green-100 text-green-800 border-green-200',
     'Pathology': 'bg-red-100 text-red-800 border-red-200',
     'Surgery': 'bg-orange-100 text-orange-800 border-orange-200',
-    'Forensic Medicine': 'bg-gray-100 text-gray-800 border-gray-200 font-semibold', // Added font-semibold
+    'Forensic Medicine': 'bg-gray-100 text-gray-800 border-gray-200',
     'Obstetrics & Gynecology': 'bg-pink-100 text-pink-800 border-pink-200',
     'Community Medicine': 'bg-teal-100 text-teal-800 border-teal-200',
-    // Group-Specific Clinics
-    'MEDICINE CLINIC': 'bg-blue-200 text-blue-900 border-blue-300 font-semibold',
-    'SURGERY CLINIC': 'bg-orange-200 text-orange-900 border-orange-300 font-semibold',
-    'OBG CLINIC': 'bg-pink-200 text-pink-900 border-pink-300 font-semibold',
-    'Orthopedics CLINIC': 'bg-indigo-200 text-indigo-900 border-indigo-300 font-semibold',
-    'Dermatology CLINIC': 'bg-emerald-200 text-emerald-900 border-emerald-300 font-semibold',
-    'Dentistry CLINIC': 'bg-cyan-200 text-cyan-900 border-cyan-300 font-semibold',
-    // Group-Specific SGL
-    'Pathology (SGL)': 'bg-red-200 text-red-900 border-red-300 italic',
-    'Pharmacology (SGL)': 'bg-green-200 text-green-900 border-green-300 italic',
-    'Microbiology (SGL)': 'bg-purple-200 text-purple-900 border-purple-300 italic',
-    // Other Activities
+    'MEDICINE CLINIC': 'bg-blue-200 text-blue-900 border-blue-300',
+    'SURGERY CLINIC': 'bg-orange-200 text-orange-900 border-orange-300',
+    'OBG CLINIC': 'bg-pink-200 text-pink-900 border-pink-300',
+    'Pathology (SGL)': 'bg-red-200 text-red-900 border-red-300',
+    'Pharmacology (SGL)': 'bg-green-200 text-green-900 border-green-300',
+    'Microbiology (SGL)': 'bg-purple-200 text-purple-900 border-purple-300',
     'Self-Directed Learning (SDL)': 'bg-amber-100 text-amber-800 border-amber-200',
     'FAMILY ADOPTION PROGRAMME': 'bg-cyan-100 text-cyan-800 border-cyan-200',
     'Class/Activity': 'bg-slate-100 text-slate-800 border-slate-200'
@@ -352,7 +322,6 @@ const MarkAttendancePage = () => {
         setLoading(true);
         let fetchedGroup = 'A'; 
 
-        // 1. Fetch User Profile (to get group)
         const userRes = await axios.get(`${backendUrl}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -364,7 +333,6 @@ const MarkAttendancePage = () => {
           setUserGroup('A');
         }
 
-        // 2. Fetch Existing Attendance Records
         const attRes = await fetch(`${backendUrl}/api/attendance/my`, {
           headers: { 
             'Authorization': `Bearer ${token}`,
@@ -402,7 +370,6 @@ const MarkAttendancePage = () => {
     
     fetchData();
   }, [backendUrl, token]);
-
 
   // Auto-save attendance when status changes
   const handleAttendanceChange = useCallback(async (record, newStatus) => {
@@ -702,56 +669,57 @@ const MarkAttendancePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-      {/* Header */}
+      {/* Header - Clean mobile version */}
       <header className="bg-white/90 backdrop-blur-md border-b border-gray-300/50 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <button
                 onClick={() => navigate('/')}
-                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 bg-gray-100 hover:bg-gray-200 p-2 sm:px-3 sm:py-2 rounded-lg"
+                title="Back to Home"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span className="font-medium">Back</span>
+                <span className="hidden sm:inline font-medium">Back</span>
               </button>
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-blue-500 text-xl"> <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg></span>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg flex items-center justify-center shadow-sm">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
               </div>
               <div>
-                <h1 className="text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Portal</h1>
-                <p className="text-sm text-gray-600">Mark your class attendance (Group {userGroup})</p>
+                <h1 className="text-sm sm:text-lg font-semibold text-gray-900 tracking-tight">Quadrant's Portal</h1>
+                <p className="text-xs text-gray-600 hidden sm:block">Mark your class attendance (Group {userGroup})</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
         {/* Page Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-light text-gray-900 mb-4 tracking-tight">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-4xl font-light text-gray-900 mb-3 sm:mb-4 tracking-tight">
             Mark <span className="font-semibold">Attendance</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Recording attendance for <strong className="font-semibold">Group {userGroup}</strong> classes.
           </p>
         </div>
 
         {/* Alerts */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-red-700">{error}</span>
+              <span className="text-red-700 text-sm">{error}</span>
             </div>
             <button onClick={() => setError('')} className="text-red-500 hover:text-red-700">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -759,15 +727,15 @@ const MarkAttendancePage = () => {
         )}
 
         {successMsg && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-green-700">{successMsg}</span>
+              <span className="text-green-700 text-sm">{successMsg}</span>
             </div>
             <button onClick={() => setSuccessMsg('')} className="text-green-500 hover:text-green-700">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -775,32 +743,31 @@ const MarkAttendancePage = () => {
         )}
 
         {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg sm:rounded-xl p-4 sm:p-6">
+            <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
+              <div className="w-6 h-6 sm:w-10 sm:h-10 bg-blue-100 rounded flex sm:rounded-lg items-center justify-center">
+                <svg className="w-3 h-3 sm:w-5 sm:h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Availability Notice</h3>
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-900">Availability Notice</h3>
             </div>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-700 text-xs sm:text-base leading-relaxed">
               Attendance for each day's classes becomes available after <strong className="font-semibold">4:00 PM</strong> on the class date. 
-             
             </p>
           </div>
 
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6">
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-green-50 border border-green-200 rounded-lg sm:rounded-xl p-4 sm:p-6">
+            <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
+              <div className="w-6 h-6 sm:w-10 sm:h-10 bg-green-100 rounded flex sm:rounded-lg items-center justify-center">
+                <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Auto-Save Enabled</h3>
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-900">Auto-Save Enabled</h3>
             </div>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-700 text-xs sm:text-base leading-relaxed">
               Your attendance changes are automatically saved. Data persists across sessions. 
               Currently loaded: <strong className="font-semibold">{Object.keys(attendanceRecords).length}</strong> records.
             </p>
@@ -808,9 +775,9 @@ const MarkAttendancePage = () => {
         </div>
 
         {/* Attendance List */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-            <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
             Available Classes
@@ -825,8 +792,6 @@ const MarkAttendancePage = () => {
 
           {/* Desktop View */}
           <DesktopTableView />
-
-          
         </div>
       </div>
     </div>
