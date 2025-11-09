@@ -1,0 +1,378 @@
+{
+    "timetable": [ {
+        "date": "01-11-2025",
+        "day": "SATURDAY",
+        "time_8_9_AM": "IM 3.1 Define, discuss, describe and distinguish community acquired pneumonia, nosocomial pneumonia and aspiration pneumonia",
+        "time_9_AM_12_Noon": "SDL-COM MED - 1",
+        "time_1_2_PM": "MI. Introduction to General Microbiology, Bacterial Taxonomy and Morphology",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "03-11-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Transport, absorption & Bioavailability",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "Pathology: Introduction to pathology PA1.1, 1.2,1.3",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "04-11-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "SU 1.3 Describe basic concepts of peri-operative care",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Physiology, growth, nutrition and metabolism of pathogenic bacteria",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "05-11-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Cell injury: causes, etiology, mechanisms, types and its effects.",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Transport, absorption & Bioavailability",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "06-11-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Microscopy in Microbiology, Laboratory diagnosis of bacterial infections",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "FM1.1-FM1.4: Basics of Forensic Medicine, legal procedures, and Courts in India.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/MICRO)"
+    },
+    {
+        "date": "07-11-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Distribution of drugs",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Cell injury: causes, etiology, mechanisms, types and its effects.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "10-11-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Distribution of drugs",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Cell injury: causes, etiology, mechanisms, types and its effects.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "11-11-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "SU 4.2 Describe clinical features, diagnose, type & extent of burns and plan appropriate treatment",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Overview of infectious diseases, causative agents and pathogenesis of bacterial infections",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "12-11-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Reversible cell injury including reperfusion cell injury.",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Metabolism of drugs",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "13-11-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Bacterial Genetics and genetic mechanisms of antibiotic resistance",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "FM1.5-FM1.8: Court procedures, Offenses in Court, Dying Declaration/Deposition, related legal notifications.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "14-11-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Metabolism of drugs",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Describe and discuss cell death: apoptosis",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "15-11-2025",
+        "day": "SATURDAY",
+        "time_8_9_AM": "IM 3.2 Discuss and describe the aetiologies of various kinds of pneumonia and their microbiology",
+        "time_9_AM_12_Noon": "SDL-FSM-1",
+        "time_1_2_PM": "MI. Overview of Virology: Morphology, Classification, Replication",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "17-11-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Excretion, prolongation of drug action",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Describe and discuss cell death: necrosis, difference between necrosis and apoptosis, difference between reversible and irreversible cell death",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "18-11-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "SU 5.3 Differentiate the various types of wounds, plan & observe management of wounds",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Pathogenesis and diagnosis of viral infections",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "19-11-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Inflammation: define, signs, causes/ stimuli, types Acute inflammation: vascular events",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Excretion, prolongation of drug action",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "20-11-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Overview of Protozoal diseases: Classification, pathogenesis and diagnosis",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OG 2.1 Describe and discuss the development and anatomy of the female reproductive tract, relationship to other pelvic organs, applied anatomy as related to Obstetrics and Gynaecology.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "21-11-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. General principles of mechanism of drug action",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Acute inflammation: cellular events. Morphological patterns of acute inflammation, systemic effects of acute inflammation, outcomes of acute inflammation",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "24-11-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. General principles of mechanism of drug action",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Mediators of inflammation",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "25-11-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "SU 6.2 Enumerate prophylactic & therapeutic antibiotics. Plan appropriate management",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Overview of medically important helminths: Classification, pathogenesis and diagnosisof helminthic infections",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "26-11-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Chronic inflammation define, describe with, causes, types, non specific and granulomatous. Enumerate examples of each",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. DRC. Therapeutic index, synergism, antagonism.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "27-11-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Overview of medically important fungus: Classification, pathogenesis and diagnosisof fungal infections",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OG 2.1 Describe and discuss the development and anatomy of the female reproductive tract, relationship to other pelvic organs, applied anatomy as related to Obstetrics and Gynaecology.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "28-11-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Factors modifying drug action",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Healing and repair with bone healing, wound healing",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "29-11-2025",
+        "day": "SATURDAY",
+        "time_8_9_AM": "IM 3.3 Discuss and describe the pathogenesis, presentation, naturalhistory and complications of pneumonia",
+        "time_9_AM_12_Noon": "SDL-COM MED - 2",
+        "time_1_2_PM": "MI. Methods of sterilization, updates, applicationsin laboratory, clinical and surgical practice",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "01-12-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Geriatric & pediatric pharmacology",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Edema",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "02-12-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "SU 7.1 Describe planning & conduct of surgical audit. SU 7.2 Describe principles & steps of clinical research in General Surgery",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Methods of disinfection, updates, applicationsin laboratory, clinical and surgical practice",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "03-12-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Hyperemia, congestion, hemorrhage",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH: Drug use in pregnancy, lactation, hepatic & renal disorders.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "04-12-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Normal Human microbiota and epidemiology of infectious diseases",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OG 2.1 Describe and discuss the development and anatomy of the female reproductive tract, relationship to other pelvic organs, applied anatomy as related to Obstetrics and Gynaecology.",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "05-12-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Drug regulation, acts & other legal aspects.",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Shock",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "06-12-2025",
+        "day": "SATURDAY",
+        "time_8_9_AM": "IM 3.15/3.16: Indications for hospitalisation, isolation and barriernursing in patients with pneumonia",
+        "time_9_AM_12_Noon": "SDL-FSM-2",
+        "time_1_2_PM": "MI. Antibiotics: mechanisms, susceptibility and resistance, Monitoring of therapy and Stewardship",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "08-12-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Overview of drug discovery, phases of clinical trial, GCP",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Normal hemostasis, etiopathogenesis & consequences of thrombosis",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "09-12-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "CM 7.1 Define Epidemiology and describe and enumerate the principles, concepts and uses",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Healthcare associated infections: Types, Diagnosis, Prevention and control",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "10-12-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Ischemia/ infarction and embolism",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Cholinergic drugs",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "11-12-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Biomedical waste management, needle stick injury and environmental surveillance",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OG 3.1 Describe the physiology of ovulation, menestruation, fertilization, implantation and gametogenesis",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "12-12-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Cholinergic drugs",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Neoplasia 1",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "15-12-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Anti cholinesterases",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Neoplasia 2",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "16-12-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "CM 7.5 Enumerate, define, describe and discuss epidemiological study designs",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Immunity: Classification/types and mechanisms",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "17-12-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Neoplasia 3",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Anticholinergics",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "18-12-2025",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MI. Components of immune system: Organs, cells and products",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OG 3.1 Describe the physiology of ovulation, menestruation, fertilization, implantation and gametogenesis",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "19-12-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Adrenergics",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Neoplasia 4",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "20-12-2025",
+        "day": "SATURDAY",
+        "time_8_9_AM": "IM 4.1 Describe and discuss the febrile response and the influence of hostimmune status, risk factors and comorbidities on the febrileresponse",
+        "time_9_AM_12_Noon": "SDL-COM MED 3",
+        "time_1_2_PM": "MI. Overview of antigen and antibodies",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "22-12-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Adrenergics",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Neoplasia 5",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "23-12-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "CM 1.3 Describe the characteristics of agent, host and environmental factors in health and disease and the multi factorial etiology of disease",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Antigen-antibody reactions: Types, principle and applications",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "24-12-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Amyloidosis",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Alpha blockers",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/ MICRO)"
+    },
+    {
+        "date": "26-12-2025",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PH. Beta blockers",
+        "time_9_AM_12_Noon": "FAMILY ADOPTION PROGRAMME",
+        "time_1_2_PM": "FAMILY ADOPTION PROGRAMME",
+        "time_2_4_PM": "FAMILY ADOPTION PROGRAMME"
+    },
+    {
+        "date": "29-12-2025",
+        "day": "MONDAY",
+        "time_8_9_AM": "PH. Beta blockers",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PA: Principles and mechanisms in immunity",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+    },
+    {
+        "date": "30-12-2025",
+        "day": "TUESDAY",
+        "time_8_9_AM": "CM 1.4 Describe and discuss the natural history of disease",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MI. Antigen-antibody reactions: Newer methods",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    },
+    {
+        "date": "31-12-2025",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PA: Hypersensitivity reaction",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PH. Part completion test",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
+    }
+  ]}
