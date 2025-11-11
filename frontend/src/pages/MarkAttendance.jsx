@@ -476,6 +476,27 @@ const MarkAttendancePage = () => {
     }
   }, [backendUrl, token, attendanceRecords]);
 
+  // Separate records into Pending and Already Marked
+  const { pendingRecords, markedRecords } = React.useMemo(() => {
+    const pending = [];
+    const marked = [];
+
+    flatTimetable.forEach((record) => {
+      const status = attendanceRecords[record.uniqueId];
+      const submission = getSubmissionStatus(record.date, status);
+      
+      if (submission.status === "Future") return;
+
+      if (status) {
+        marked.push(record);
+      } else if (submission.isAvailable && submission.canMark) {
+        pending.push(record);
+      }
+    });
+
+    return { pendingRecords: pending, markedRecords: marked };
+  }, [flatTimetable, attendanceRecords]);
+
   // Mobile Card View
   const MobileAttendanceCard = ({ record }) => {
     const status = attendanceRecords[record.uniqueId];
@@ -570,7 +591,7 @@ const MarkAttendancePage = () => {
   };
 
   // Desktop Table View
-  const DesktopTableView = () => (
+  const DesktopTableView = ({ records }) => (
     <div className="hidden lg:block overflow-hidden rounded-xl border border-gray-200 shadow-sm">
       <table className="w-full">
         <thead className="bg-gradient-to-r from-gray-900 to-blue-900">
@@ -583,7 +604,7 @@ const MarkAttendancePage = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {flatTimetable.map((record) => {
+          {records.map((record) => {
             const status = attendanceRecords[record.uniqueId];
             const submission = getSubmissionStatus(record.date, status);
             if (submission.status === "Future") return null;
@@ -774,25 +795,62 @@ const MarkAttendancePage = () => {
           </div>
         </div>
 
-        {/* Attendance List */}
-        <div className="mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            Available Classes
-          </h2>
+        {/* Pending Attendance Section */}
+        {pendingRecords.length > 0 && (
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Pending Attendance ({pendingRecords.length})
+            </h2>
 
-          {/* Mobile View */}
-          <div className="lg:hidden space-y-4">
-            {flatTimetable.map((record) => (
-              <MobileAttendanceCard key={record.uniqueId} record={record} />
-            ))}
+            {/* Mobile View */}
+            <div className="lg:hidden space-y-4">
+              {pendingRecords.map((record) => (
+                <MobileAttendanceCard key={record.uniqueId} record={record} />
+              ))}
+            </div>
+
+            {/* Desktop View */}
+            <DesktopTableView records={pendingRecords} />
           </div>
+        )}
 
-          {/* Desktop View */}
-          <DesktopTableView />
-        </div>
+        {/* Already Marked Attendance Section */}
+        {markedRecords.length > 0 && (
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Already Marked ({markedRecords.length})
+            </h2>
+
+            {/* Mobile View */}
+            <div className="lg:hidden space-y-4">
+              {markedRecords.map((record) => (
+                <MobileAttendanceCard key={record.uniqueId} record={record} />
+              ))}
+            </div>
+
+            {/* Desktop View */}
+            <DesktopTableView records={markedRecords} />
+          </div>
+        )}
+
+        {/* No Records Message */}
+        {pendingRecords.length === 0 && markedRecords.length === 0 && (
+          <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+            <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No Available Classes</h3>
+            <p className="text-gray-600 max-w-md mx-auto">
+              There are no classes available for attendance marking at the moment. Classes become available after 4:00 PM on their scheduled date.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
