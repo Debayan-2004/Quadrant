@@ -1,6 +1,7 @@
 // src/components/SubjectAttendanceSummary.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { AttendanceContext } from '../context/AttendanceContext';
+import timetableData from '../assets/academicTimetable.json';
 
 const SubjectAttendanceSummary = () => {
   const { token, backendUrl } = useContext(AttendanceContext);
@@ -23,6 +24,60 @@ const SubjectAttendanceSummary = () => {
     'Self-Directed Learning (SDL)': 'SDL',
     'FAMILY ADOPTION PROGRAMME': 'FAP',
     'Class/Activity': 'Other Activities'
+  };
+
+  // Function to map SDL session to actual subject
+  const mapSdlToSubject = (sdlTitle) => {
+    if (!sdlTitle) return null;
+    
+    const sdlTitleLower = sdlTitle.toLowerCase();
+    
+    // Check for Community Medicine SDL
+    if (sdlTitleLower.includes('com med') || sdlTitleLower.includes('community med')) {
+      return 'Community Medicine';
+    }
+    
+    // Check for Forensic Medicine SDL
+    if (sdlTitleLower.includes('fsm') || sdlTitleLower.includes('forensic')) {
+      return 'Forensic Medicine';
+    }
+    
+    // You can add more mappings here as needed
+    return null;
+  };
+
+  // Function to check if a timetable entry is SDL
+  const isSdlSession = (entry) => {
+    const timeSlots = ['time_8_9_AM', 'time_9_AM_12_Noon', 'time_1_2_PM', 'time_2_4_PM'];
+    return timeSlots.some(slot => 
+      entry[slot] && entry[slot].toLowerCase().includes('sdl')
+    );
+  };
+
+  // Function to extract SDL sessions from timetable with their subjects
+  const getSdlSessionsWithSubjects = () => {
+    const sdlSessions = [];
+    
+    timetableData.timetable.forEach(entry => {
+      const timeSlots = ['time_8_9_AM', 'time_9_AM_12_Noon', 'time_1_2_PM', 'time_2_4_PM'];
+      
+      timeSlots.forEach(slot => {
+        const activity = entry[slot];
+        if (activity && activity.toLowerCase().includes('sdl')) {
+          const subject = mapSdlToSubject(activity);
+          if (subject) {
+            sdlSessions.push({
+              date: entry.date,
+              activity,
+              subject,
+              timeSlot: slot
+            });
+          }
+        }
+      });
+    });
+    
+    return sdlSessions;
   };
 
   useEffect(() => {
@@ -48,9 +103,25 @@ const SubjectAttendanceSummary = () => {
         const data = await res.json();
         
         if (data.success && data.stats) {
+          // Get all SDL sessions from timetable with their mapped subjects
+          const sdlSessions = getSdlSessionsWithSubjects();
+          
           // Process stats - EXCLUDE CANCELLED CLASSES from total count
           const processedStats = data.stats
             .map(stat => {
+              // Check if this is an SDL entry that needs to be merged with a subject
+              if (stat.subject.toLowerCase().includes('sdl')) {
+                // Try to find which subject this SDL belongs to based on timetable
+                const matchingSdl = sdlSessions.find(sdl => 
+                  sdl.activity.toLowerCase().includes(stat.subject.toLowerCase().replace('self-directed learning (sdl)', 'sdl').trim())
+                );
+                
+                if (matchingSdl) {
+                  // This SDL belongs to a regular subject, so we'll merge it
+                  return null;
+                }
+              }
+              
               // Calculate actual total classes (EXCLUDING CANCELLED)
               const actualTotalClasses = stat.totalClasses - (stat.cancelledClasses || 0);
               
@@ -64,13 +135,82 @@ const SubjectAttendanceSummary = () => {
                 displayName: subjectDisplayNames[stat.subject] || stat.subject,
                 percentage: percentage,
                 actualTotalClasses: actualTotalClasses, // Only non-cancelled classes
-                isLow: actualTotalClasses > 0 && percentage < 75 // Check against 75% threshold
+                isLow: actualTotalClasses > 0 && percentage < 75 // Check against 75% threshold,
               };
             })
+            .filter(stat => stat !== null) // Remove SDL entries that will be merged
             .filter(stat => stat.actualTotalClasses > 0) // Only show subjects with actual classes
             .sort((a, b) => b.percentage - a.percentage);
 
-          setSubjectStats(processedStats);
+          // Now, aggregate SDL attendance into their respective subjects
+          const aggregatedStats = processedStats.reduce((acc, stat) => {
+            // Check if this subject has any SDL sessions
+            const subjectSdlSessions = sdlSessions.filter(sdl => sdl.subject === stat.subject);
+            
+            if (subjectSdlSessions.length > 0) {
+              // Find SDL attendance records for this subject
+              const sdlAttendanceRecords = data.stats.filter(s => 
+                s.subject.toLowerCase().includes('sdl')
+              );
+              
+              // For each SDL session for this subject, check if there's attendance
+              let sdlAttended = 0;
+              let sdlTotal = 0;
+              
+              subjectSdlSessions.forEach(sdlSession => {
+                const sdlRecord = sdlAttendanceRecords.find(s => {
+                  // Try to match the SDL session with attendance record
+                  const sdlTitle = sdlSession.activity.toLowerCase();
+                  const attendanceSubject = s.subject.toLowerCase();
+                  
+                  // Check for common patterns
+                  if (sdlTitle.includes('com med') && attendanceSubject.includes('community')) {
+                    return true;
+                  }
+                  if (sdlTitle.includes('fsm') && attendanceSubject.includes('forensic')) {
+                    return true;
+                  }
+                  // Add more patterns as needed
+                  
+                  return false;
+                });
+                
+                if (sdlRecord) {
+                  sdlTotal++;
+                  if (sdlRecord.attendedClasses > 0) {
+                    sdlAttended++;
+                  }
+                }
+              });
+              
+              // Merge SDL attendance with regular attendance
+              const mergedStat = {
+                ...stat,
+                attendedClasses: stat.attendedClasses + sdlAttended,
+                totalClasses: stat.totalClasses + sdlTotal,
+                actualTotalClasses: stat.actualTotalClasses + sdlTotal, // SDL classes are never cancelled
+                percentage: (stat.actualTotalClasses + sdlTotal) > 0 
+                  ? Math.round(((stat.attendedClasses + sdlAttended) / (stat.actualTotalClasses + sdlTotal)) * 100)
+                  : 0
+              };
+              
+              mergedStat.isLow = mergedStat.actualTotalClasses > 0 && mergedStat.percentage < 75;
+              
+              acc.push(mergedStat);
+            } else {
+              // No SDL sessions for this subject
+              acc.push(stat);
+            }
+            
+            return acc;
+          }, []);
+
+          // Filter out any SDL-only entries that weren't merged
+          const finalStats = aggregatedStats.filter(stat => 
+            !stat.subject.toLowerCase().includes('sdl')
+          );
+
+          setSubjectStats(finalStats);
         }
       } catch (err) {
         console.error('Error fetching attendance stats:', err);
