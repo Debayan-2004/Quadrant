@@ -374,7 +374,615 @@
         "time_9_AM_12_Noon": "CLINICS",
         "time_1_2_PM": "PH. Part completion test",
         "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/PHARMA/MICRO)"
-    }
+    },
+    {
+        "date": "01-01-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - MICRO Module 2.1",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "02-01-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "03-01-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "05-01-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "COMMUNITY MEDICINE (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "06-01-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "MICROBIOLOGY (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "CLINICS",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "07-01-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PATHOLOGY (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "08-01-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "SDL - FSM - 3",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "09-01-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "12-01-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "GENERAL MEDICINE (Topic: Anaemia)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "ASSESSMENT (PHARMACOLOGY)",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "13-01-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "14-01-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "15-01-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PHARMA Module 2.2",
+        "time_1_2_PM": "FORENSIC MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "16-01-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "17-01-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "SGT/SEMINAR/ TUTORIAL(FSM)",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "19-01-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "COMMUNITY MEDICINE (Topic: Malaria)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "20-01-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "MICROBIOLOGY (Topic: Malaria)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "21-01-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PHARMACOLOGY (Topic: Malaria)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "22-01-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "GENERAL MEDICINE (Topic: Malaria)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "ASSESSMENT (PATHOLOGY)",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "27-01-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "28-01-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "29-01-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PATHO Module 2.4",
+        "time_1_2_PM": "FORENSIC MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "30-01-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "31-01-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "SGT/SEMINAR/ TUTORIAL(FSM)",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "02-02-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "03-02-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "04-02-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "05-02-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PATHO Module 2.4",
+        "time_1_2_PM": "FORENSIC MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "06-02-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "07-02-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "SGT/SEMINAR/ TUTORIAL(FSM)",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "25-02-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "26-02-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - MICRO Module 2.1",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "27-02-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_1_2_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_2_4_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)"
+      },
+      {
+        "date": "03-03-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "COMMUNITY MEDICINE (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "05-03-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "MICROBIOLOGY (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "SDL - FSM - 4",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "06-03-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PATHOLOGY (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "07-03-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "PHARMACOLOGY (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "SPORTS, YOGA / EXTRA CURRICULAR ACTIVITIES",
+        "time_1_2_PM": "GENERAL MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "09-03-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "GENERAL MEDICINE (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "GENERAL SURGERY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "11-03-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "OBG (Topic: Tuberculosis)",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "ASSESSMENT (MICROBIOLOGY)",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "12-03-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PHARMA Module 2.3",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "13-03-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "16-03-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "17-03-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "18-03-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "19-03-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PATHO Module 2.7",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "20-03-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "23-03-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "24-03-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "25-03-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "26-03-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "SDL - MICRO - 1",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "27-03-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_1_2_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_2_4_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)"
+      },
+      {
+        "date": "30-03-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "31-03-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "01-04-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "02-04-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "SDL - PHARMA - 1",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "04-04-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "SGT/SEMINAR/ TUTORIAL(FSM)",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "06-04-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "07-04-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "COMMUNITY MEDICINE",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "08-04-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "09-04-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - MICRO Module 2.1",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "10-04-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "11-04-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "13-04-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "COMMUNITY MEDICINE",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "14-04-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "15-04-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "16-04-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "SDL - FSM - 5",
+        "time_1_2_PM": "FORENSIC MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "17-04-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "18-04-2026",
+        "day": "SATURDAY",
+        "time_8_9_AM": "GENERAL MEDICINE",
+        "time_9_AM_12_Noon": "SGT/SEMINAR/ TUTORIAL(FSM)",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "20-04-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "21-04-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "22-04-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "23-04-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PHARMA Module 2.2",
+        "time_1_2_PM": "FORENSIC MEDICINE",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "24-04-2026",
+        "day": "FRIDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_1_2_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)",
+        "time_2_4_PM": "FAMILY ADOPTION PROGRAMME (9 AM TO 4 PM)"
+      },
+      {
+        "date": "27-04-2026",
+        "day": "MONDAY",
+        "time_8_9_AM": "PHARMACOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "MICROBIOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "28-04-2026",
+        "day": "TUESDAY",
+        "time_8_9_AM": "GENERAL SURGERY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PATHOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "29-04-2026",
+        "day": "WEDNESDAY",
+        "time_8_9_AM": "MICROBIOLOGY",
+        "time_9_AM_12_Noon": "CLINICS",
+        "time_1_2_PM": "PHARMACOLOGY",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      },
+      {
+        "date": "30-04-2026",
+        "day": "THURSDAY",
+        "time_8_9_AM": "PATHOLOGY",
+        "time_9_AM_12_Noon": "AETCOM - PATHO Module 2.4",
+        "time_1_2_PM": "OBG",
+        "time_2_4_PM": "SMALL GROUP LEARNING (PATHO/ PHARMA/ MICRO)"
+      }
 
 
     

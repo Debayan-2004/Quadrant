@@ -7,13 +7,17 @@ import timetableData from '../assets/academicTimetable.json';
 const academicTimetable = timetableData.timetable;
 
 // =========================================================================
-// 🌟 INTEGRATED SCHEDULES AND ASSESSMENT DATES (Required for Group Logic)
+// 🌟 INTEGRATED SCHEDULES AND ASSESSMENT DATES (Updated for 2026)
 // =========================================================================
 
 const clinicalPostingSchedule = {
   "01/11/2025 TO 20/11/2025": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
   "21/11/2025 TO 10/12/2025": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
-  "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" }
+  "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
+  "01/01/2026 TO 31/01/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
+  "01/02/2026 TO 28/02/2026": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
+  "01/03/2026 TO 31/03/2026": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
+  "01/04/2026 TO 30/04/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" }
 };
 
 const sglSchedules = {
@@ -24,12 +28,28 @@ const sglSchedules = {
     "THURSDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
     "FRIDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
     "SATURDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" }
+  },
+  "first_to_second_assessment": {
+    "MONDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
+    "TUESDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
+    "WEDNESDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
+    "THURSDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
+    "FRIDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
+    "SATURDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" }
+  },
+  "second_to_third_assessment": {
+    "MONDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
+    "TUESDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
+    "WEDNESDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" },
+    "THURSDAY": { "Pathology": "C", "Pharmacology": "B", "Microbiology": "A" },
+    "FRIDAY": { "Pathology": "A", "Pharmacology": "C", "Microbiology": "B" },
+    "SATURDAY": { "Pathology": "B", "Pharmacology": "A", "Microbiology": "C" }
   }
 };
 
-// Assessment dates
-const FIRST_ASSESSMENT_DATE_STRING = null; 
-const SECOND_ASSESSMENT_DATE_STRING = null; 
+// Assessment dates for 2026
+const FIRST_ASSESSMENT_DATE_STRING = "12-01-2026"; 
+const SECOND_ASSESSMENT_DATE_STRING = "22-01-2026"; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
 
 // ----------------- Helper Functions -----------------
@@ -144,21 +164,37 @@ const getSubjectName = (topicString, dateString, dayName, userGroup) => {
     return "SMALL GROUP LEARNING"; 
   }
   
-  // 3. Handle other special activities (SDL, FAP)
+  // 3. Handle other special activities (SDL, FAP, AETCOM)
   if (topicString.includes("FAMILY ADOPTION PROGRAMME")) return "FAMILY ADOPTION PROGRAMME";
   if (topicString.includes("SDL")) return "Self-Directed Learning (SDL)";
+  if (topicString.includes("AETCOM")) return "AETCOM";
   
-  // 4. Check for full subject names
-  if (topicString.includes("Pathology")) return "Pathology";
-  if (topicString.includes("Pharmacology")) return "Pharmacology";
-  if (topicString.includes("Microbiology")) return "Microbiology";
-  if (topicString.includes("Internal Medicine")) return "Internal Medicine";
-  if (topicString.includes("Surgery")) return "Surgery";
-  if (topicString.includes("Forensic Medicine")) return "Forensic Medicine";
-  if (topicString.includes("Obstetrics") || topicString.includes("Gynaecology")) return "Obstetrics & Gynecology";
-  if (topicString.includes("Community Medicine")) return "Community Medicine";
-
-  // 5. Check for abbreviations
+  // 4. Check for 2026 full subject names (Jan-Apr format)
+  const upperTopic = topicString.toUpperCase();
+  
+  // Check for subject names with "Topic:" format
+  if (upperTopic.includes("TOPIC:")) {
+    if (upperTopic.includes("PATHOLOGY")) return "Pathology";
+    if (upperTopic.includes("PHARMACOLOGY")) return "Pharmacology";
+    if (upperTopic.includes("MICROBIOLOGY")) return "Microbiology";
+    if (upperTopic.includes("GENERAL MEDICINE") || upperTopic.includes("INTERNAL MEDICINE")) return "Internal Medicine";
+    if (upperTopic.includes("GENERAL SURGERY")) return "Surgery";
+    if (upperTopic.includes("COMMUNITY MEDICINE")) return "Community Medicine";
+    if (upperTopic.includes("OBG")) return "Obstetrics & Gynecology";
+    if (upperTopic.includes("FORENSIC MEDICINE")) return "Forensic Medicine";
+  }
+  
+  // Check for standalone full subject names
+  if (upperTopic === "PATHOLOGY") return "Pathology";
+  if (upperTopic === "PHARMACOLOGY") return "Pharmacology";
+  if (upperTopic === "MICROBIOLOGY") return "Microbiology";
+  if (upperTopic === "GENERAL MEDICINE" || upperTopic === "INTERNAL MEDICINE") return "Internal Medicine";
+  if (upperTopic === "GENERAL SURGERY" || upperTopic === "SURGERY") return "Surgery";
+  if (upperTopic === "COMMUNITY MEDICINE") return "Community Medicine";
+  if (upperTopic === "OBG" || upperTopic === "OBSTETRICS & GYNAECOLOGY") return "Obstetrics & Gynecology";
+  if (upperTopic === "FORENSIC MEDICINE") return "Forensic Medicine";
+  
+  // 5. Check for abbreviations (2025 format)
   const subjectMap = {
     IM: "Internal Medicine", MI: "Microbiology", PH: "Pharmacology",
     PA: "Pathology", SU: "Surgery", FM: "Forensic Medicine",
@@ -172,9 +208,10 @@ const getSubjectName = (topicString, dateString, dayName, userGroup) => {
     return subjectMap[prefix];
   }
   
-  // 6. Final fallback
+  // 6. Final fallback - clean up the first part
   if (parts[0]) {
-    return parts[0].replace(":", "").replace(".", "").replace(/\d/g, ''); 
+    const cleanPart = parts[0].replace(":", "").replace(".", "").replace(/\d/g, '').trim();
+    if (cleanPart) return cleanPart;
   }
   
   return "Class/Activity";
@@ -236,6 +273,7 @@ const getSubmissionStatus = (classDate, existingAttendance) => {
   };
 };
 
+// FIXED: This was the main bug - filtering out CLINICS and SGL
 const getFlatTimetable = (timetable, userGroup) => {
   const flatList = [];
   timetable.forEach((dayRecord) => {
@@ -243,7 +281,9 @@ const getFlatTimetable = (timetable, userGroup) => {
       const topic = dayRecord[key];
       const subject = getSubjectName(topic, dayRecord.date, dayRecord.day, userGroup);
       
-      if (subject !== "N/A" && subject !== "HOLIDAY" && subject !== "CLINICS" && subject !== "SMALL GROUP LEARNING") {
+      // FIX: Only exclude N/A and HOLIDAY
+      // CLINICS and SGL will be converted to department-specific names by getSubjectName
+      if (subject !== "N/A" && !subject.includes("HOLIDAY")) {
         const timeSlot = key
           .replace('time_', '')
           .replace(/_/g, '-')
@@ -267,7 +307,7 @@ const getFlatTimetable = (timetable, userGroup) => {
   return flatList;
 };
 
-// Color mapping for subjects
+// Color mapping for subjects (updated for new subjects)
 const getSubjectColor = (subject) => {
   const colorMap = {
     'Internal Medicine': 'bg-blue-100 text-blue-800 border-blue-200',
@@ -286,6 +326,7 @@ const getSubjectColor = (subject) => {
     'Microbiology (SGL)': 'bg-purple-200 text-purple-900 border-purple-300',
     'Self-Directed Learning (SDL)': 'bg-amber-100 text-amber-800 border-amber-200',
     'FAMILY ADOPTION PROGRAMME': 'bg-cyan-100 text-cyan-800 border-cyan-200',
+    'AETCOM': 'bg-indigo-100 text-indigo-800 border-indigo-200',
     'Class/Activity': 'bg-slate-100 text-slate-800 border-slate-200'
   };
   
@@ -727,6 +768,9 @@ const MarkAttendancePage = () => {
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Recording attendance for <strong className="font-semibold">Group {userGroup}</strong> classes.
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            Academic Period: November 2025 - April 2026
           </p>
         </div>
 
