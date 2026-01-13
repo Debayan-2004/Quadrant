@@ -50,7 +50,7 @@ const sglSchedules = {
 };
 
 // Fill these based on your academic calendar for 2026
-const FIRST_ASSESSMENT_DATE_STRING = "12-01-2026"; 
+const FIRST_ASSESSMENT_DATE_STRING = "01-02-2026"; 
 const SECOND_ASSESSMENT_DATE_STRING = "22-01-2026"; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
 
