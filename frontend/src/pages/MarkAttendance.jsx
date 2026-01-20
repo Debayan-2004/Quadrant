@@ -14,9 +14,9 @@ const clinicalPostingSchedule = {
   "01/11/2025 TO 20/11/2025": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
   "21/11/2025 TO 10/12/2025": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
   "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
-  "01/01/2026 TO 31/01/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
-  "01/02/2026 TO 28/02/2026": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
-  "01/03/2026 TO 31/03/2026": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
+  "01/01/2026 TO 16/01/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
+  "19/01/2026 TO 06/02/2026": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
+  "07/02/2026 TO 30/03/2026": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
   "01/04/2026 TO 30/04/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" }
 };
 
@@ -48,8 +48,8 @@ const sglSchedules = {
 };
 
 // Assessment dates for 2026
-const FIRST_ASSESSMENT_DATE_STRING = "01-02-2026"; 
-const SECOND_ASSESSMENT_DATE_STRING = "22-01-2026"; 
+const FIRST_ASSESSMENT_DATE_STRING = null; 
+const SECOND_ASSESSMENT_DATE_STRING = null; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
 
 // ----------------- Helper Functions -----------------
