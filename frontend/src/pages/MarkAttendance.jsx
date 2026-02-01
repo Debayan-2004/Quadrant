@@ -52,6 +52,43 @@ const FIRST_ASSESSMENT_DATE_STRING = null;
 const SECOND_ASSESSMENT_DATE_STRING = null; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
 
+// Subject options for extra classes
+const SUBJECT_OPTIONS = [
+  "Internal Medicine",
+  "Microbiology",
+  "Pharmacology",
+  "Pathology",
+  "Surgery",
+  "Forensic Medicine",
+  "Obstetrics & Gynecology",
+  "Community Medicine",
+  "MEDICINE CLINIC",
+  "SURGERY CLINIC",
+  "OBG CLINIC",
+  "Pathology (SGL)",
+  "Pharmacology (SGL)",
+  "Microbiology (SGL)",
+  "Self-Directed Learning (SDL)",
+  "FAMILY ADOPTION PROGRAMME",
+  "AETCOM",
+  "Other"
+];
+
+// Time slot options for extra classes
+const TIME_SLOT_OPTIONS = [
+  "8-9 AM",
+  "9 AM-12 Noon",
+  "1-2 PM",
+  "2-4 PM",
+  "4-5 PM",
+  "5-6 PM",
+  "6-7 PM",
+  "7-8 PM"
+];
+
+// Day options
+const DAY_OPTIONS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
+
 // ----------------- Helper Functions -----------------
 
 const parseDate = (dateString) => {
@@ -300,6 +337,7 @@ const getFlatTimetable = (timetable, userGroup) => {
           subject, 
           topic,
           uniqueId: `${dayRecord.date}-${key}`,
+          isExtra: false
         });
       }
     });
@@ -327,7 +365,8 @@ const getSubjectColor = (subject) => {
     'Self-Directed Learning (SDL)': 'bg-amber-100 text-amber-800 border-amber-200',
     'FAMILY ADOPTION PROGRAMME': 'bg-cyan-100 text-cyan-800 border-cyan-200',
     'AETCOM': 'bg-indigo-100 text-indigo-800 border-indigo-200',
-    'Class/Activity': 'bg-slate-100 text-slate-800 border-slate-200'
+    'Class/Activity': 'bg-slate-100 text-slate-800 border-slate-200',
+    'Other': 'bg-gray-100 text-gray-800 border-gray-200'
   };
   
   return colorMap[subject] || 'bg-gray-100 text-gray-800 border-gray-200';
@@ -345,6 +384,16 @@ const MarkAttendancePage = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [savingRecordId, setSavingRecordId] = useState(null);
   
+  // Extra class form state
+  const [extraClassForm, setExtraClassForm] = useState({
+    date: '',
+    day: '',
+    timeSlot: TIME_SLOT_OPTIONS[0],
+    subject: SUBJECT_OPTIONS[0],
+    customSubject: '',
+    status: 'Present'
+  });
+
   const flatTimetable = React.useMemo(() => {
     return getFlatTimetable(academicTimetable, userGroup);
   }, [userGroup]); 
@@ -389,8 +438,13 @@ const MarkAttendancePage = () => {
         
         if (data.records && Array.isArray(data.records)) {
           const initialAttendance = data.records.reduce((acc, record) => {
-            const uniqueId = `${record.classDate}-${record.timeSlotKey}`;
-            acc[uniqueId] = record.status;
+            const uniqueId = record.isExtra ? 
+              `${record.classDate}-EXTRA-${record.timeSlotKey}-${record.subject}` : 
+              `${record.classDate}-${record.timeSlotKey}`;
+            acc[uniqueId] = {
+              status: record.status,
+              isExtra: record.isExtra || false
+            };
             return acc;
           }, {});
           
@@ -412,9 +466,126 @@ const MarkAttendancePage = () => {
     fetchData();
   }, [backendUrl, token]);
 
+  // Format date to DD-MM-YYYY
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  // Get day name from date
+  const getDayName = (dateString) => {
+    const [day, month, year] = dateString.split('-');
+    const date = new Date(`${year}-${month}-${day}`);
+    return DAY_OPTIONS[date.getDay()] || 'MONDAY';
+  };
+
+  // Handle extra class form changes
+  const handleExtraClassChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === 'date' && value) {
+      const formattedDate = formatDate(new Date(value));
+      const dayName = getDayName(formattedDate);
+      
+      setExtraClassForm(prev => ({
+        ...prev,
+        [name]: formattedDate,
+        day: dayName
+      }));
+    } else {
+      setExtraClassForm(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  // Submit extra class attendance
+  const handleExtraClassSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!extraClassForm.date) {
+      setError('Please select a date');
+      return;
+    }
+
+    const subject = extraClassForm.subject === 'Other' ? 
+      extraClassForm.customSubject : extraClassForm.subject;
+
+    if (!subject.trim()) {
+      setError('Please enter a subject name');
+      return;
+    }
+
+    setSavingRecordId('extra-class-form');
+    setError('');
+    setSuccessMsg('');
+
+    try {
+      const payload = {
+        records: [{
+          subject,
+          classDate: extraClassForm.date,
+          timeSlot: extraClassForm.timeSlot,
+          timeSlotKey: `EXTRA_${extraClassForm.timeSlot.replace(/[-\s]/g, '_')}`,
+          status: extraClassForm.status,
+          isExtra: true
+        }]
+      };
+      
+      const res = await fetch(`${backendUrl}/api/attendance/mark`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to save attendance');
+      }
+
+      // Update local state
+      const uniqueId = `${extraClassForm.date}-EXTRA-EXTRA_${extraClassForm.timeSlot.replace(/[-\s]/g, '_')}-${subject}`;
+      
+      setAttendanceRecords(prev => ({
+        ...prev,
+        [uniqueId]: {
+          status: extraClassForm.status,
+          isExtra: true
+        }
+      }));
+
+      // Reset form
+      setExtraClassForm({
+        date: '',
+        day: '',
+        timeSlot: TIME_SLOT_OPTIONS[0],
+        subject: SUBJECT_OPTIONS[0],
+        customSubject: '',
+        status: 'Present'
+      });
+
+      setSuccessMsg(`✅ Extra class attendance marked as ${extraClassForm.status}`);
+      setTimeout(() => setSuccessMsg(''), 3000);
+      
+    } catch (err) {
+      console.error('❌ Error saving extra class attendance:', err);
+      setError(err.message || 'Failed to save attendance. Please try again.');
+    } finally {
+      setSavingRecordId(null);
+    }
+  };
+
   // Auto-save attendance when status changes
   const handleAttendanceChange = useCallback(async (record, newStatus) => {
-    const { uniqueId, date, timeSlot, timeSlotKey, subject } = record;
+    const { uniqueId, date, timeSlot, timeSlotKey, subject, isExtra } = record;
     
     setSavingRecordId(uniqueId);
     setError('');
@@ -423,7 +594,10 @@ const MarkAttendancePage = () => {
     try {
       setAttendanceRecords(prev => ({
         ...prev,
-        [uniqueId]: newStatus
+        [uniqueId]: {
+          ...prev[uniqueId],
+          status: newStatus
+        }
       }));
 
       const payload = {
@@ -432,7 +606,8 @@ const MarkAttendancePage = () => {
           classDate: date,
           timeSlot,
           timeSlotKey,
-          status: newStatus
+          status: newStatus,
+          isExtra: isExtra || false
         }]
       };
       
@@ -469,14 +644,14 @@ const MarkAttendancePage = () => {
 
   // Remove attendance record
   const handleRemoveAttendance = useCallback(async (record) => {
-    const { uniqueId, date, timeSlotKey } = record;
+    const { uniqueId, date, timeSlotKey, isExtra } = record;
     
     setSavingRecordId(uniqueId);
     setError('');
     setSuccessMsg('');
 
     try {
-      const previousStatus = attendanceRecords[uniqueId];
+      const previousStatus = attendanceRecords[uniqueId]?.status;
 
       setAttendanceRecords(prev => {
         const newState = { ...prev };
@@ -492,7 +667,8 @@ const MarkAttendancePage = () => {
         },
         body: JSON.stringify({
           classDate: date,
-          timeSlotKey: timeSlotKey
+          timeSlotKey: timeSlotKey,
+          isExtra: isExtra || false
         }),
       });
 
@@ -501,7 +677,7 @@ const MarkAttendancePage = () => {
       if (!res.ok) {
         setAttendanceRecords(prev => ({
           ...prev,
-          [uniqueId]: previousStatus
+          [uniqueId]: { status: previousStatus, isExtra: isExtra || false }
         }));
         throw new Error(data.message || 'Failed to remove attendance');
       }
@@ -518,29 +694,64 @@ const MarkAttendancePage = () => {
   }, [backendUrl, token, attendanceRecords]);
 
   // Separate records into Pending and Already Marked
-  const { pendingRecords, markedRecords } = React.useMemo(() => {
+  const { pendingRecords, markedRecords, extraClassesRecords } = React.useMemo(() => {
     const pending = [];
     const marked = [];
+    const extraClasses = [];
 
     flatTimetable.forEach((record) => {
-      const status = attendanceRecords[record.uniqueId];
+      const recordData = attendanceRecords[record.uniqueId];
+      const status = recordData?.status;
       const submission = getSubmissionStatus(record.date, status);
       
       if (submission.status === "Future") return;
 
       if (status) {
-        marked.push(record);
+        marked.push({
+          ...record,
+          status,
+          isExtra: false
+        });
       } else if (submission.isAvailable && submission.canMark) {
         pending.push(record);
       }
     });
 
-    return { pendingRecords: pending, markedRecords: marked };
+    // Add extra classes from attendanceRecords
+    Object.keys(attendanceRecords).forEach(key => {
+      if (key.includes('EXTRA') && attendanceRecords[key]?.isExtra) {
+        const parts = key.split('-');
+        const date = `${parts[0]}-${parts[1]}-${parts[2]}`;
+        const timeSlotKey = parts[3];
+        const subject = parts.slice(4).join('-');
+        
+        const timeSlot = timeSlotKey.replace('EXTRA_', '').replace(/_/g, '-');
+        
+        extraClasses.push({
+          uniqueId: key,
+          date,
+          day: getDayName(date),
+          timeSlot,
+          timeSlotKey,
+          subject,
+          status: attendanceRecords[key].status,
+          isExtra: true
+        });
+      }
+    });
+
+    return { 
+      pendingRecords: pending, 
+      markedRecords: marked,
+      extraClassesRecords: extraClasses 
+    };
   }, [flatTimetable, attendanceRecords]);
 
   // Mobile Card View
   const MobileAttendanceCard = ({ record }) => {
-    const status = attendanceRecords[record.uniqueId];
+    const recordData = attendanceRecords[record.uniqueId];
+    const status = recordData?.status;
+    const isExtra = recordData?.isExtra || record.isExtra;
     const submission = getSubmissionStatus(record.date, status);
     const isSaving = savingRecordId === record.uniqueId;
 
@@ -559,6 +770,9 @@ const MarkAttendancePage = () => {
             <div>
               <div className="font-semibold text-gray-900">{record.date}</div>
               <div className="text-sm text-blue-600 font-medium">{record.day}</div>
+              {isExtra && (
+                <div className="text-xs text-purple-600 font-semibold mt-1">EXTRA CLASS</div>
+              )}
             </div>
           </div>
           <div className={`px-3 py-1 rounded-full text-xs font-semibold ${submission.color} bg-white border`}>
@@ -632,21 +846,23 @@ const MarkAttendancePage = () => {
   };
 
   // Desktop Table View
-  const DesktopTableView = ({ records }) => (
+  const DesktopTableView = ({ records, showExtraLabel = false }) => (
     <div className="hidden lg:block overflow-hidden rounded-xl border border-gray-200 shadow-sm">
       <table className="w-full">
         <thead className="bg-gradient-to-r from-gray-900 to-blue-900">
           <tr>
             <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Date & Day</th>
             <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Time Slot</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Subject</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Status</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Actions</th>
+            <th className="px6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Subject</th>
+            <th className="px6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Status</th>
+            <th className="px6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {records.map((record) => {
-            const status = attendanceRecords[record.uniqueId];
+            const recordData = attendanceRecords[record.uniqueId];
+            const status = recordData?.status;
+            const isExtra = recordData?.isExtra || record.isExtra;
             const submission = getSubmissionStatus(record.date, status);
             if (submission.status === "Future") return null;
             
@@ -657,6 +873,9 @@ const MarkAttendancePage = () => {
                 <td className="px-6 py-4">
                   <div className="font-semibold text-gray-900">{record.date}</div>
                   <div className="text-sm text-blue-600">{record.day}</div>
+                  {isExtra && (
+                    <div className="text-xs text-purple-600 font-semibold mt-1">EXTRA CLASS</div>
+                  )}
                 </td>
                 <td className="px-6 py-4">
                   <div className="font-medium text-gray-900">{record.timeSlot}</div>
@@ -807,6 +1026,134 @@ const MarkAttendancePage = () => {
           </div>
         )}
 
+        {/* Extra Classes Section */}
+        <div className="mb-8 bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <svg className="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Mark Extra Classes
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Use this section to mark attendance for classes not in the regular timetable.
+          </p>
+
+          <form onSubmit={handleExtraClassSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Date *
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  value={extraClassForm.date ? new Date(extraClassForm.date.split('-').reverse().join('-')).toISOString().split('T')[0] : ''}
+                  onChange={handleExtraClassChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  required
+                />
+                {extraClassForm.date && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Selected: {extraClassForm.date} ({extraClassForm.day})
+                  </p>
+                )}
+              </div>
+
+              {/* Time Slot */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Time Slot
+                </label>
+                <select
+                  name="timeSlot"
+                  value={extraClassForm.timeSlot}
+                  onChange={handleExtraClassChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                >
+                  {TIME_SLOT_OPTIONS.map(slot => (
+                    <option key={slot} value={slot}>{slot}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Subject */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Subject
+                </label>
+                <select
+                  name="subject"
+                  value={extraClassForm.subject}
+                  onChange={handleExtraClassChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                >
+                  {SUBJECT_OPTIONS.map(subject => (
+                    <option key={subject} value={subject}>{subject}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Status
+                </label>
+                <select
+                  name="status"
+                  value={extraClassForm.status}
+                  onChange={handleExtraClassChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                >
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Custom Subject */}
+            {extraClassForm.subject === 'Other' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Custom Subject Name *
+                </label>
+                <input
+                  type="text"
+                  name="customSubject"
+                  value={extraClassForm.customSubject}
+                  onChange={handleExtraClassChange}
+                  placeholder="Enter subject name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  required={extraClassForm.subject === 'Other'}
+                />
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={savingRecordId === 'extra-class-form'}
+                className={`w-full md:w-auto px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-200 ${
+                  savingRecordId === 'extra-class-form' ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {savingRecordId === 'extra-class-form' ? (
+                  <span className="flex items-center justify-center">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Saving...
+                  </span>
+                ) : (
+                  'Mark Extra Class Attendance'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+
         {/* Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="bg-blue-50 border border-blue-200 rounded-lg sm:rounded-xl p-4 sm:p-6">
@@ -820,6 +1167,7 @@ const MarkAttendancePage = () => {
             </div>
             <p className="text-gray-700 text-xs sm:text-base leading-relaxed">
               Attendance for each day's classes becomes available after <strong className="font-semibold">4:00 PM</strong> on the class date. 
+              Extra classes can be marked anytime.
             </p>
           </div>
 
@@ -883,15 +1231,37 @@ const MarkAttendancePage = () => {
           </div>
         )}
 
+        {/* Extra Classes Marked Section */}
+        {extraClassesRecords.length > 0 && (
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Extra Classes Marked ({extraClassesRecords.length})
+            </h2>
+
+            {/* Mobile View */}
+            <div className="lg:hidden space-y-4">
+              {extraClassesRecords.map((record) => (
+                <MobileAttendanceCard key={record.uniqueId} record={record} />
+              ))}
+            </div>
+
+            {/* Desktop View */}
+            <DesktopTableView records={extraClassesRecords} showExtraLabel={true} />
+          </div>
+        )}
+
         {/* No Records Message */}
-        {pendingRecords.length === 0 && markedRecords.length === 0 && (
+        {pendingRecords.length === 0 && markedRecords.length === 0 && extraClassesRecords.length === 0 && (
           <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
             <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
             <h3 className="text-lg font-medium text-gray-900 mb-2">No Available Classes</h3>
             <p className="text-gray-600 max-w-md mx-auto">
-              There are no classes available for attendance marking at the moment. Classes become available after 4:00 PM on their scheduled date.
+              There are no classes available for attendance marking at the moment. Classes become available after 4:00 PM on their scheduled date. Use the "Mark Extra Classes" section above to add additional classes.
             </p>
           </div>
         )}
