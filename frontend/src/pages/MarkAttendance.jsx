@@ -48,7 +48,7 @@ const sglSchedules = {
 };
 
 // Assessment dates for 2026
-const FIRST_ASSESSMENT_DATE_STRING = null; 
+const FIRST_ASSESSMENT_DATE_STRING = "09-02-2026"; 
 const SECOND_ASSESSMENT_DATE_STRING = null; 
 const THIRD_ASSESSMENT_DATE_STRING = null;
 
