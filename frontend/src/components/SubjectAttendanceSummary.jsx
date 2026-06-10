@@ -8,8 +8,9 @@ const SubjectAttendanceSummary = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Subject mapping for better display names
+  // Subject mapping for better display names (Complete for Nov 2025 - Aug 2026)
   const subjectDisplayNames = {
+    // Core Subjects
     'Internal Medicine': 'Internal Medicine',
     'Microbiology': 'Microbiology',
     'Pharmacology': 'Pharmacology',
@@ -18,10 +19,67 @@ const SubjectAttendanceSummary = () => {
     'Forensic Medicine': 'Forensic Medicine',
     'Obstetrics & Gynecology': 'OBG',
     'Community Medicine': 'Community Medicine',
+    
+    // New 2026 Subjects
+    'Paediatrics': 'Paediatrics',
+    'ENT': 'ENT',
+    'Ophthalmology': 'Ophthalmology',
+    
+    // Clinical Postings
+    'MEDICINE CLINIC': 'Medicine Clinic',
+    'SURGERY CLINIC': 'Surgery Clinic',
+    'OBG CLINIC': 'OBG Clinic',
+    'PAEDIATRICS CLINIC': 'Paediatrics Clinic',
+    'ENT CLINIC': 'ENT Clinic',
+    'OPHTHALMOLOGY CLINIC': 'Ophthalmology Clinic',
+    'COMMUNITY MEDICINE CLINIC': 'Community Medicine Clinic',
     'CLINICS': 'Clinical Postings',
+    
+    // SGL Sessions
+    'Pathology (SGL)': 'Pathology SGL',
+    'Pharmacology (SGL)': 'Pharmacology SGL',
+    'Microbiology (SGL)': 'Microbiology SGL',
     'SMALL GROUP LEARNING': 'SGL Sessions',
+    
+    // Special Activities
     'Self-Directed Learning (SDL)': 'SDL',
+    'Self-Directed Learning (Forensic Medicine)': 'SDL (Forensic)',
+    'Self-Directed Learning (Microbiology)': 'SDL (Microbiology)',
+    'Self-Directed Learning (Pharmacology)': 'SDL (Pharmacology)',
+    'Self-Directed Learning (Pathology)': 'SDL (Pathology)',
+    'Family Adoption Programme': 'FAP',
     'FAMILY ADOPTION PROGRAMME': 'FAP',
+    'Sports/Yoga/Extra Curricular': 'Co-curricular',
+    'Small Group Teaching': 'Small Group Teaching',
+    'Forensic Medicine (Tutorial)': 'Forensic Tutorial',
+    'SGT/SEMINAR/TUTORIAL(FSM)': 'Forensic Tutorial',
+    
+    // Assessments
+    'Internal Assessment Exam': 'Internal Assessment',
+    'Practical Assessment': 'Practical Exam',
+    'Pharmacology Assessment': 'Pharmacology Exam',
+    'Microbiology Assessment': 'Microbiology Exam',
+    'Pathology Assessment': 'Pathology Exam',
+    'Assessment': 'Assessment',
+    'THEORY 1ST INTERNAL ASSESSMENT EXAMINATION': '1st Internal Assessment',
+    'THEORY 2ND INTERNAL ASSESSMENT EXAMINATION': '2nd Internal Assessment',
+    'THEORY 3RD INTERNAL ASSESSMENT EXAMINATION': '3rd Internal Assessment',
+    'PRACTICAL 1ST INTERNAL ASSESSMENT': '1st Practical Exam',
+    'PRACTICAL 2ND INTERNAL ASSESSMENT': '2nd Practical Exam',
+    'PRACTICAL 3RD INTERNAL ASSESSMENT': '3rd Practical Exam',
+    
+    // AETCOM
+    'AETCOM': 'AETCOM',
+    'AETCOM - MICRO Module 2.1': 'AETCOM (Microbiology)',
+    'AETCOM - PHARMA Module 2.2': 'AETCOM (Pharmacology)',
+    'AETCOM - PATHO Module 2.4': 'AETCOM (Pathology)',
+    'AETCOM - PHARMA Module 2.3': 'AETCOM (Pharmacology)',
+    'AETCOM - PATHO Module 2.7': 'AETCOM (Pathology)',
+    'AETCOM - MICRO Module 2.8': 'AETCOM (Microbiology)',
+    'AETCOM - PHARMA Module 2.5': 'AETCOM (Pharmacology)',
+    'AETCOM - MICRO Module 2.1': 'AETCOM (Microbiology)',
+    
+    // Default
     'Class/Activity': 'Other Activities'
   };
 
@@ -59,15 +117,24 @@ const SubjectAttendanceSummary = () => {
                 ? Math.round((stat.attendedClasses / actualTotalClasses) * 100)
                 : 0;
 
+              // Handle AETCOM display names with module numbers
+              let displayName = subjectDisplayNames[stat.subject];
+              if (!displayName && stat.subject.startsWith('AETCOM')) {
+                displayName = 'AETCOM';
+              }
+              if (!displayName && stat.subject.includes('ASSESSMENT')) {
+                displayName = 'Assessment';
+              }
+
               return {
                 ...stat,
-                displayName: subjectDisplayNames[stat.subject] || stat.subject,
+                displayName: displayName || stat.subject,
                 percentage: percentage,
-                actualTotalClasses: actualTotalClasses, // Only non-cancelled classes
-                isLow: actualTotalClasses > 0 && percentage < 75 // Check against 75% threshold
+                actualTotalClasses: actualTotalClasses,
+                isLow: actualTotalClasses > 0 && percentage < 75
               };
             })
-            .filter(stat => stat.actualTotalClasses > 0) // Only show subjects with actual classes
+            .filter(stat => stat.actualTotalClasses > 0)
             .sort((a, b) => b.percentage - a.percentage);
 
           setSubjectStats(processedStats);
@@ -94,6 +161,32 @@ const SubjectAttendanceSummary = () => {
   const overallPercentage = overallStats.totalActualClasses > 0 
     ? Math.round((overallStats.totalAttended / overallStats.totalActualClasses) * 100)
     : 0;
+
+  // Get academic period text based on earliest and latest date from stats
+  const getAcademicPeriodText = () => {
+    if (subjectStats.length === 0) return 'Academic Period';
+    
+    const dates = subjectStats.flatMap(stat => 
+      stat.records ? stat.records.map(r => r.date) : []
+    );
+    
+    if (dates.length === 0) return 'Nov 2025 - Aug 2026';
+    
+    const sortedDates = dates.sort();
+    const earliest = sortedDates[0];
+    const latest = sortedDates[sortedDates.length - 1];
+    
+    if (earliest && latest) {
+      const [earliestDay, earliestMonth, earliestYear] = earliest.split('-');
+      const [latestDay, latestMonth, latestYear] = latest.split('-');
+      
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      return `${monthNames[parseInt(earliestMonth)-1]} ${earliestYear} - ${monthNames[parseInt(latestMonth)-1]} ${latestYear}`;
+    }
+    
+    return 'Nov 2025 - Aug 2026';
+  };
 
   if (loading) {
     return (
@@ -128,12 +221,12 @@ const SubjectAttendanceSummary = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
         <div className="text-center py-6">
           <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center">
-            <span className="text-blue-500 text-xl"> <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg></span>
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-800 mb-2">No Data Available</h3>
-          <p className="text-gray-600 text-sm">Start marking your attendance to see statistics</p>
+          <p className="text-gray-600 text-sm">Start marking your attendance to see statistics for Nov 2025 - Aug 2026</p>
         </div>
       </div>
     );
@@ -145,9 +238,12 @@ const SubjectAttendanceSummary = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
             Attendance Summary
           </h2>
-          <p className="text-sm text-gray-600 mt-1">Subject-wise performance overview</p>
+          <p className="text-sm text-gray-600 mt-1">Subject-wise performance overview | {getAcademicPeriodText()}</p>
         </div>
         <div className="text-right">
           <div className="text-xs font-medium text-gray-500">Total Subjects</div>
@@ -189,7 +285,7 @@ const SubjectAttendanceSummary = () => {
           </div>
           <div className="text-center">
             <div className="font-semibold text-gray-700">{overallStats.totalActualClasses}</div>
-            <div className="text-gray-500">Total</div>
+            <div className="text-gray-500">Total Classes</div>
           </div>
           <div className="text-center">
             <div className="font-semibold text-gray-700">{overallStats.totalCancelled}</div>
@@ -202,7 +298,7 @@ const SubjectAttendanceSummary = () => {
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Subject Performance</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {subjectStats.map((subject, index) => (
+          {subjectStats.map((subject) => (
             <div
               key={subject.subject}
               className={`border rounded-xl p-4 transition-all duration-300 hover:shadow-md ${
@@ -252,7 +348,7 @@ const SubjectAttendanceSummary = () => {
               {/* Cancelled Classes */}
               {subject.cancelledClasses > 0 && (
                 <div className="text-xs text-gray-500 mb-2">
-                  {subject.cancelledClasses} cancelled
+                  🚫 {subject.cancelledClasses} cancelled
                 </div>
               )}
 
@@ -294,7 +390,7 @@ const SubjectAttendanceSummary = () => {
             <svg className="w-4 h-4 mr-2 mt-0.5 text-gray-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
-            <span>Only classes that actually happened are counted (cancelled classes excluded from total calculations)</span>
+            <span>Only classes that actually happened are counted (cancelled classes excluded from total calculations). Showing attendance for the complete academic period.</span>
           </div>
         </div>
       </div>
@@ -302,4 +398,4 @@ const SubjectAttendanceSummary = () => {
   );
 };
 
-export default SubjectAttendanceSummary; 
+export default SubjectAttendanceSummary;

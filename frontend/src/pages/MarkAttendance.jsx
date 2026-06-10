@@ -10,14 +10,25 @@ const academicTimetable = timetableData.timetable;
 // 🌟 INTEGRATED SCHEDULES AND ASSESSMENT DATES (Updated for 2026)
 // =========================================================================
 
-const clinicalPostingSchedule = {
-  "01/11/2025 TO 20/11/2025": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
-  "21/11/2025 TO 10/12/2025": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
-  "11/12/2025 TO 31/12/2025": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
-  "01/01/2026 TO 16/01/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
-  "19/01/2026 TO 06/02/2026": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
-  "07/02/2026 TO 30/03/2026": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" },
-  "01/04/2026 TO 30/04/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" }
+// Phase 1: Clinical Postings (Jan-Mar 2026)
+const clinicalPostingSchedulePhase1 = {
+  "02/01/2026 TO 16/01/2026": { "MEDICINE": "A", "SURGERY": "B", "OBG": "C" },
+  "19/01/2026 TO 04/02/2026": { "MEDICINE": "B", "SURGERY": "C", "OBG": "A" },
+  "06/02/2026 TO 18/03/2026": { "MEDICINE": "C", "SURGERY": "A", "OBG": "B" }
+};
+
+// Phase 2: Specialty Postings (Mar-Jun 2026)
+const clinicalPostingSchedulePhase2 = {
+  "20/03/2026 TO 08/04/2026": { "PAEDIATRICS": "A", "ENT": "B", "OPHTHALMOLOGY": "C" },
+  "10/04/2026 TO 05/05/2026": { "PAEDIATRICS": "B", "ENT": "C", "OPHTHALMOLOGY": "A" },
+  "06/05/2026 TO 11/06/2026": { "PAEDIATRICS": "C", "ENT": "A", "OPHTHALMOLOGY": "B" }
+};
+
+// Phase 3: Community Medicine Posting (Jun-Jul 2026)
+const clinicalPostingSchedulePhase3 = {
+  "12/06/2026 TO 29/06/2026": { "COMMUNITY MEDICINE": "A" },
+  "30/06/2026 TO 14/07/2026": { "COMMUNITY MEDICINE": "B" },
+  "15/07/2026 TO 31/07/2026": { "COMMUNITY MEDICINE": "C" }
 };
 
 const sglSchedules = {
@@ -49,8 +60,8 @@ const sglSchedules = {
 
 // Assessment dates for 2026
 const FIRST_ASSESSMENT_DATE_STRING = "09-02-2026"; 
-const SECOND_ASSESSMENT_DATE_STRING = null; 
-const THIRD_ASSESSMENT_DATE_STRING = null;
+const SECOND_ASSESSMENT_DATE_STRING = "08-05-2026"; 
+const THIRD_ASSESSMENT_DATE_STRING = "03-08-2026";
 
 // ----------------- Helper Functions -----------------
 
@@ -86,16 +97,35 @@ const parseDateRange = (dateRange) => {
   return { start: startDate, end: endDate };
 };
 
+// Updated to check all three clinical posting phases
 const getClinicalPostingPeriod = (dateString) => {
   const date = parseDate(dateString);
   if (!date) return null;
   
-  for (const period in clinicalPostingSchedule) {
+  // Check Phase 1: Medicine, Surgery, OBG (Jan-Mar 2026)
+  for (const period in clinicalPostingSchedulePhase1) {
     const range = parseDateRange(period);
     if (date >= range.start && date <= range.end) {
-      return period;
+      return { period, phase: 1, schedule: clinicalPostingSchedulePhase1 };
     }
   }
+  
+  // Check Phase 2: Paediatrics, ENT, Ophthalmology (Mar-Jun 2026)
+  for (const period in clinicalPostingSchedulePhase2) {
+    const range = parseDateRange(period);
+    if (date >= range.start && date <= range.end) {
+      return { period, phase: 2, schedule: clinicalPostingSchedulePhase2 };
+    }
+  }
+  
+  // Check Phase 3: Community Medicine (Jun-Jul 2026)
+  for (const period in clinicalPostingSchedulePhase3) {
+    const range = parseDateRange(period);
+    if (date >= range.start && date <= range.end) {
+      return { period, phase: 3, schedule: clinicalPostingSchedulePhase3 };
+    }
+  }
+  
   return null;
 };
 
@@ -121,26 +151,26 @@ const getSGLPeriod = (dateString) => {
   }
 
   if (firstAssessment) {
-      if (date < firstAssessment) return "before_first_assessment";
-      return "first_to_second_assessment"; 
+    if (date < firstAssessment) return "before_first_assessment";
+    return "first_to_second_assessment"; 
   }
 
   return "before_first_assessment";
 };
 
-// Core function to map timetable activity to a user-specific subject name.
+// Core function to map timetable activity to a user-specific subject name
 const getSubjectName = (topicString, dateString, dayName, userGroup) => {
   if (!topicString || topicString.includes("HOLIDAY")) return topicString || "N/A";
   
-  const validGroups = ['A', 'B', 'C'];
+  const validGroups = ['A', 'B', 'C', 'D', 'E'];
   const currentGroup = validGroups.includes(userGroup) ? userGroup : 'A'; 
   
   // 1. Clinical Posting Check
   if (topicString.includes("CLINICS")) {
-    const period = getClinicalPostingPeriod(dateString);
+    const clinicalInfo = getClinicalPostingPeriod(dateString);
     
-    if (period && clinicalPostingSchedule[period]) {
-      for (const [department, group] of Object.entries(clinicalPostingSchedule[period])) {
+    if (clinicalInfo && clinicalInfo.schedule[clinicalInfo.period]) {
+      for (const [department, group] of Object.entries(clinicalInfo.schedule[clinicalInfo.period])) {
         if (group === currentGroup) {
           return `${department} CLINIC`;
         }
@@ -164,51 +194,78 @@ const getSubjectName = (topicString, dateString, dayName, userGroup) => {
     return "SMALL GROUP LEARNING"; 
   }
   
-  // 3. Handle other special activities (SDL, FAP, AETCOM)
-  if (topicString.includes("FAMILY ADOPTION PROGRAMME")) return "FAMILY ADOPTION PROGRAMME";
-  if (topicString.includes("SDL")) return "Self-Directed Learning (SDL)";
-  if (topicString.includes("AETCOM")) return "AETCOM";
-  
-  // 4. Check for 2026 full subject names (Jan-Apr format)
-  const upperTopic = topicString.toUpperCase();
-  
-  // Check for subject names with "Topic:" format
-  if (upperTopic.includes("TOPIC:")) {
-    if (upperTopic.includes("PATHOLOGY")) return "Pathology";
-    if (upperTopic.includes("PHARMACOLOGY")) return "Pharmacology";
-    if (upperTopic.includes("MICROBIOLOGY")) return "Microbiology";
-    if (upperTopic.includes("GENERAL MEDICINE") || upperTopic.includes("INTERNAL MEDICINE")) return "Internal Medicine";
-    if (upperTopic.includes("GENERAL SURGERY")) return "Surgery";
-    if (upperTopic.includes("COMMUNITY MEDICINE")) return "Community Medicine";
-    if (upperTopic.includes("OBG")) return "Obstetrics & Gynecology";
-    if (upperTopic.includes("FORENSIC MEDICINE")) return "Forensic Medicine";
+  // 3. Handle AETCOM
+  if (topicString.includes("AETCOM")) {
+    // Extract module info if available
+    if (topicString.includes("Module")) {
+      const moduleMatch = topicString.match(/Module\s+[\d.]+/i);
+      if (moduleMatch) {
+        return `AETCOM ${moduleMatch[0]}`;
+      }
+    }
+    return "AETCOM";
   }
   
-  // Check for standalone full subject names
-  if (upperTopic === "PATHOLOGY") return "Pathology";
-  if (upperTopic === "PHARMACOLOGY") return "Pharmacology";
-  if (upperTopic === "MICROBIOLOGY") return "Microbiology";
-  if (upperTopic === "GENERAL MEDICINE" || upperTopic === "INTERNAL MEDICINE") return "Internal Medicine";
-  if (upperTopic === "GENERAL SURGERY" || upperTopic === "SURGERY") return "Surgery";
-  if (upperTopic === "COMMUNITY MEDICINE") return "Community Medicine";
-  if (upperTopic === "OBG" || upperTopic === "OBSTETRICS & GYNAECOLOGY") return "Obstetrics & Gynecology";
-  if (upperTopic === "FORENSIC MEDICINE") return "Forensic Medicine";
+  // 4. Handle SDL
+  if (topicString.includes("SDL")) {
+    return "Self-Directed Learning (SDL)";
+  }
   
-  // 5. Check for abbreviations (2025 format)
-  const subjectMap = {
-    IM: "Internal Medicine", MI: "Microbiology", PH: "Pharmacology",
-    PA: "Pathology", SU: "Surgery", FM: "Forensic Medicine",
-    OG: "Obstetrics & Gynecology", CM: "Community Medicine",
+  // 5. Handle Family Adoption Programme
+  if (topicString.includes("FAMILY ADOPTION PROGRAMME")) return "FAMILY ADOPTION PROGRAMME";
+  
+  // 6. Handle Sports/Yoga/Extra Curricular Activities
+  if (topicString.includes("SPORTS") || topicString.includes("YOGA") || topicString.includes("EXTRA CURRICULAR")) {
+    return "Sports/Yoga/Extra Curricular";
+  }
+  
+  // 7. Handle Assessments
+  if (topicString.includes("ASSESSEMENT") || topicString.includes("ASSESSMENT")) {
+    // Extract subject if mentioned
+    if (topicString.includes("PHARMACOLOGY")) return "Pharmacology Assessment";
+    if (topicString.includes("MICROBIOLOGY")) return "Microbiology Assessment";
+    if (topicString.includes("PATHOLOGY")) return "Pathology Assessment";
+    return "Assessment";
+  }
+  
+  // 8. Check for subject names
+  const upperTopic = topicString.toUpperCase().trim();
+  
+  // Subject mapping for exact matches
+  const subjectExactMap = {
+    "PATHOLOGY": "Pathology",
+    "PHARMACOLOGY": "Pharmacology",
+    "MICROBIOLOGY": "Microbiology",
+    "GENERAL MEDICINE": "Internal Medicine",
+    "GENERAL SURGERY": "Surgery",
+    "COMMUNITY MEDICINE": "Community Medicine",
+    "OBG": "Obstetrics & Gynecology",
+    "FORENSIC MEDICINE": "Forensic Medicine",
+    "FSM": "Forensic Medicine",
+    "PAEDIATRICS": "Paediatrics",
+    "ENT": "ENT",
+    "OPHTHALMOLOGY": "Ophthalmology"
   };
-
+  
+  if (subjectExactMap[upperTopic]) {
+    return subjectExactMap[upperTopic];
+  }
+  
+  // Check for SGT/SEMINAR/TUTORIAL
+  if (upperTopic.includes("SGT") || upperTopic.includes("SEMINAR") || upperTopic.includes("TUTORIAL")) {
+    if (upperTopic.includes("FSM")) return "Forensic Medicine Tutorial";
+    return "Small Group Teaching/Tutorial";
+  }
+  
+  // 9. Parse topic string for subject extraction
   const parts = topicString.split(/[\.\s\:]+/);
   const prefix = parts[0].toUpperCase().replace(":", "").replace(".", "");
-
-  if (subjectMap[prefix]) {
-    return subjectMap[prefix];
+  
+  if (subjectExactMap[prefix]) {
+    return subjectExactMap[prefix];
   }
   
-  // 6. Final fallback - clean up the first part
+  // 10. Final fallback
   if (parts[0]) {
     const cleanPart = parts[0].replace(":", "").replace(".", "").replace(/\d/g, '').trim();
     if (cleanPart) return cleanPart;
@@ -273,7 +330,7 @@ const getSubmissionStatus = (classDate, existingAttendance) => {
   };
 };
 
-// FIXED: This was the main bug - filtering out CLINICS and SGL
+// Get flat timetable (keeping this function as is - it was working correctly)
 const getFlatTimetable = (timetable, userGroup) => {
   const flatList = [];
   timetable.forEach((dayRecord) => {
@@ -281,8 +338,7 @@ const getFlatTimetable = (timetable, userGroup) => {
       const topic = dayRecord[key];
       const subject = getSubjectName(topic, dayRecord.date, dayRecord.day, userGroup);
       
-      // FIX: Only exclude N/A and HOLIDAY
-      // CLINICS and SGL will be converted to department-specific names by getSubjectName
+      // Only exclude N/A and HOLIDAY
       if (subject !== "N/A" && !subject.includes("HOLIDAY")) {
         const timeSlot = key
           .replace('time_', '')
@@ -307,7 +363,7 @@ const getFlatTimetable = (timetable, userGroup) => {
   return flatList;
 };
 
-// Color mapping for subjects (updated for new subjects)
+// Updated color mapping for new subjects
 const getSubjectColor = (subject) => {
   const colorMap = {
     'Internal Medicine': 'bg-blue-100 text-blue-800 border-blue-200',
@@ -318,17 +374,37 @@ const getSubjectColor = (subject) => {
     'Forensic Medicine': 'bg-gray-100 text-gray-800 border-gray-200',
     'Obstetrics & Gynecology': 'bg-pink-100 text-pink-800 border-pink-200',
     'Community Medicine': 'bg-teal-100 text-teal-800 border-teal-200',
+    'Paediatrics': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    'ENT': 'bg-indigo-100 text-indigo-800 border-indigo-200',
+    'Ophthalmology': 'bg-cyan-100 text-cyan-800 border-cyan-200',
     'MEDICINE CLINIC': 'bg-blue-200 text-blue-900 border-blue-300',
     'SURGERY CLINIC': 'bg-orange-200 text-orange-900 border-orange-300',
     'OBG CLINIC': 'bg-pink-200 text-pink-900 border-pink-300',
+    'PAEDIATRICS CLINIC': 'bg-yellow-200 text-yellow-900 border-yellow-300',
+    'ENT CLINIC': 'bg-indigo-200 text-indigo-900 border-indigo-300',
+    'OPHTHALMOLOGY CLINIC': 'bg-cyan-200 text-cyan-900 border-cyan-300',
+    'COMMUNITY MEDICINE CLINIC': 'bg-teal-200 text-teal-900 border-teal-300',
     'Pathology (SGL)': 'bg-red-200 text-red-900 border-red-300',
     'Pharmacology (SGL)': 'bg-green-200 text-green-900 border-green-300',
     'Microbiology (SGL)': 'bg-purple-200 text-purple-900 border-purple-300',
     'Self-Directed Learning (SDL)': 'bg-amber-100 text-amber-800 border-amber-200',
     'FAMILY ADOPTION PROGRAMME': 'bg-cyan-100 text-cyan-800 border-cyan-200',
     'AETCOM': 'bg-indigo-100 text-indigo-800 border-indigo-200',
+    'Sports/Yoga/Extra Curricular': 'bg-lime-100 text-lime-800 border-lime-200',
+    'Forensic Medicine Tutorial': 'bg-gray-200 text-gray-900 border-gray-300',
+    'Small Group Teaching/Tutorial': 'bg-violet-100 text-violet-800 border-violet-200',
     'Class/Activity': 'bg-slate-100 text-slate-800 border-slate-200'
   };
+  
+  // Handle AETCOM with module numbers
+  if (subject.startsWith('AETCOM')) {
+    return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+  }
+  
+  // Handle assessment subjects
+  if (subject.includes('Assessment')) {
+    return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+  }
   
   return colorMap[subject] || 'bg-gray-100 text-gray-800 border-gray-200';
 };
@@ -731,7 +807,7 @@ const MarkAttendancePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-      {/* Header - Clean mobile version */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md border-b border-gray-300/50 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
@@ -770,7 +846,7 @@ const MarkAttendancePage = () => {
             Recording attendance for <strong className="font-semibold">Group {userGroup}</strong> classes.
           </p>
           <p className="text-sm text-gray-500 mt-2">
-            Academic Period: November 2025 - April 2026
+            Academic Period: January - July 2026 | Tripura Medical College
           </p>
         </div>
 
